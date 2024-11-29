@@ -195,6 +195,16 @@ public class Program
 
         // end
     }
+//  функции неизменны?  возможен ли подмен?
+    public int FindDiagonalMax(int[,] matrix){
+        int answer = 0, n = matrix.Length;
+        
+        for(int i=1; i< n; i++){
+            if(matrix [i,i]>matrix[answer,answer]) answer = i;
+        }
+
+        return answer;
+    }
 
     public void Task_2_4(int[,] A, int[,] B)
     {
