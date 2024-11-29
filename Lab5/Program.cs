@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Numerics;
@@ -12,6 +12,37 @@ public class Program
     public static void Main()
     {
         Program program = new Program();
+        const int len = 3;
+        double[] a = new double[len] { 1, 1.5, 1 };
+        double[] b = new double[len] { 1, 1.75, 1 };
+        double[] c = new double[len] { 1.25, 1.25, 2.5 };
+        double[] actual = new double[len * len * len];
+        double[] expected = new double[len * len * len] {
+                0, 2, -1, 2, 2, 1, 0, 2, -1,
+                1, 1, -1, 1, 0, 1, 1, 1, -1,
+                -1, 2, -1, -1, 2, -1, -1, 2, -1 };
+        // Act
+        int count = 0;
+        for (int i = 0; i < len; i++)
+        {
+
+            for (int j = 0; j < len; j++)
+            {
+                for (int k = 0; k < len; k++, count++)
+                {
+                    actual[count] = program.Task_1_2(new double[] { a[i], b[j], c[k] }, new double[] { c[i], a[j], b[k] });
+                    Console.Write($"{actual[count]}  ");
+                    if (actual[count] == 2 && i == 1)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine($"{j}  {k}");
+                        Console.WriteLine();
+                    }
+                }
+            }
+            Console.WriteLine();
+        }
+
     }
     #region Level 1
     public long Task_1_1(int n, int k)
@@ -19,7 +50,7 @@ public class Program
         long answer = 0;
 
         // code here
-        answer = Factorial(n)/Factorial(k)/Factorial(n-k);
+        answer = Factorial(n) / Factorial(k) / Factorial(n - k);
         // create and use Factorial(n);
 
         // end
@@ -27,70 +58,81 @@ public class Program
         return answer;
     }
 
-    public long Factorial(int n){
+    public long Factorial(int n)
+    {
 
         long f = 1;
-        for(int i = 2; i<=n;i++) f*=i;
+        for (int i = 2; i <= n; i++) f *= i;
         return f;
     }
 
-        
+
     public int Task_1_2(double[] first, double[] second)
     {
+
         int answer = 0;
-        if (first[0] <=0 || first[1] <=0 || first[2] <=0 || second[0] <=0 || second[1] <=0 || second[2] <=0) return -1;
+        if (first[0] >= (first[1] + first[2])) return -1;
+        if (first[1] >= (first[0] + first[2])) return -1;
+        if (first[2] >= (first[1] + first[0])) return -1;
+        if (second[0] >= (second[1] + second[2])) return -1;
+        if (second[1] >= (second[0] + second[2])) return -1;
+        if (second[2] >= (second[1] + second[0])) return -1;
+        //if (first[0] <= 0 || first[1] <= 0 || first[2] <= 0 || second[0] <= 0 || second[1] <= 0 || second[2] <= 0) return -1;
         // code here
-        double areaFirst = GeronArea(first[0],first[1],first[2]);
-        double areaSecond = GeronArea(second[0],second[1],second[2]);
+        double areaFirst = GeronArea(first[0], first[1], first[2]);
+        double areaSecond = GeronArea(second[0], second[1], second[2]);
         // create and use GeronArea(a, b, c);
         // first = 1, second = 2, equal = 0, error = -1
-        if(areaFirst == areaSecond) return 0;
-        
-        if(areaFirst < areaSecond) return 1;
-        
-        if(areaFirst == areaSecond) return 2;
+        if (areaFirst == areaSecond) return 0;
+
+        if (areaFirst > areaSecond) return 1;
+
+        if (areaFirst < areaSecond) return 2;
         // end
 
         return answer;
     }
 
-    public double GeronArea(int a, int b, int c){
-        double p = (a+b+c)/2.0;
-        return Math.Sqrt(p*(p-a)*(p-b)*(p-c));
+    public double GeronArea(double a, double b, double c)
+    {
+        double p = (a + b + c) / 2.0;
+        return Math.Sqrt(p * (p - a) * (p - b) * (p - c));
     }
 
     public int Task_1_3a(double v1, double a1, double v2, double a2, int time)
     {
         int answer = 0;
-        
+
         // code here
 
         // create and use GetDistance(v, a, t); t - hours
         // first = 1, second = 2, equal = 0
-        double  distF = GetDistance(v1,a1,t);
-        double  distS = GetDistance(v2,a2,t);
+        double distF = GetDistance(v1, a1, time);
+        double distS = GetDistance(v2, a2, time);
 
-        if ( distF == distS) return 0;
-        if ( distF < distS) return 1;
-        if ( distF > distS) return 2;
+        if (distF == distS) return 0;
+        if (distF > distS) return 1;
+        if (distF < distS) return 2;
         // end
 
         return answer;
     }
 
-    
+
     public int Task_1_3b(double v1, double a1, double v2, double a2)
     {
         int answer = 0;
 
         // code here
 
-        double  distF = GetDistance(v1,a1,t);
-        double  distS = GetDistance(v2,a2,t);
         // create and use GetDistance(v, a, t); t - hours
-        for (int i = 0; i<t;i++){
-            if (GetDistance(v1,a1,i) == GetDistance(v2,a2,i)) {
-                answer=i; 
+        int i = 0;
+        while(true)
+        {
+            i++;
+            if (GetDistance(v1, a1, i) == GetDistance(v2, a2, i))
+            {
+                answer = i;
                 break;
             }
         }
@@ -98,9 +140,10 @@ public class Program
 
         return answer;
     }
-    
-    public double GetDistance(double v, double a, int t){
-        return v*t + a*t*t/2;
+
+    public double GetDistance(double v, double a, int t)
+    {
+        return v * t + a * t * t / 2;
     }
     #endregion
 
@@ -108,15 +151,33 @@ public class Program
     public void Task_2_1(int[,] A, int[,] B)
     {
         // code here
-        
-        // create and use FindMax(matrix, out int i, out int j);
 
+        // create and use FindMax(matrix, out int i, out int j);
+        FindMax(A, out int iA, out int jA);
+        FindMax(B, out int iB, out int jB);
+        int temp = A[iA, jA];
+        A[iA, jA] = B[iB, jB];
+        B[iB, jB] = temp;
         // end
     }
 
-    public void FindMax(matrix, out int x, out int y);
+    public void FindMax(int[,] matrix, out int x, out int y)
+    {
+        x = 0; y = 0;
+        int n = matrix.GetLength(0), m = matrix.GetLength(1);
+        for(int i = 0; i<n; i++)
+        {
+            for(int j = 0; j<m; j++)
+            {
+                if(matrix[i, j] > matrix[x, y])
+                {
+                    x = i; y = j;
+                }
+            }
+        }
+    }
 
-    
+
     public void Task_2_2(double[] A, double[] B)
     {
         // code here
@@ -229,7 +290,7 @@ public class Program
 
         // end
     }
-    
+
     public void Task_2_14(int[,] matrix)
     {
         // code here
@@ -238,7 +299,7 @@ public class Program
 
         // end
     }
-    
+
     public int Task_2_15(int[,] A, int[,] B, int[,] C)
     {
         int answer = 0; // 1 - increasing   0 - no sequence   -1 - decreasing
@@ -250,7 +311,7 @@ public class Program
         // end
 
         return answer;
-    }    
+    }
 
     public void Task_2_16(int[] A, int[] B)
     {
@@ -294,7 +355,7 @@ public class Program
         // use RemoveColumn(matrix, columnIndex); from 2_10
 
         // end
-    }    
+    }
 
     public void Task_2_21(int[,] A, int[,] B, out int[] answerA, out int[] answerB)
     {
