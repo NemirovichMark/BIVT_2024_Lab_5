@@ -12,37 +12,122 @@ public class Program
     public static void Main()
     {
         Program program = new Program();
-        const int len = 3;
-        double[] a = new double[len] { 1, 1.5, 1 };
-        double[] b = new double[len] { 1, 1.75, 1 };
-        double[] c = new double[len] { 1.25, 1.25, 2.5 };
-        double[] actual = new double[len * len * len];
-        double[] expected = new double[len * len * len] {
-                0, 2, -1, 2, 2, 1, 0, 2, -1,
-                1, 1, -1, 1, 0, 1, 1, 1, -1,
-                -1, 2, -1, -1, 2, -1, -1, 2, -1 };
-        // Act
-        int count = 0;
-        for (int i = 0; i < len; i++)
-        {
+        int[,] matrix4x4 = new int[,] {
+            { 1, 2, 3, 4 },
+            { 5, -5, 5, -5 },
+            { 6, 7, 8, 9 },
+            { -6, -5, -8, 0 }};
+        int[,] matrix7x4 = new int[,] {
+            { 1,   2,  3, 4 },
+            { 5,   5,  4, 6 },
+            { 5,  -5,  5, -5 },
+            { 6,   7,  8, 9 },
+            { -6, -5, -8, 0 },
+            { 11, 12, 13, 14 },
+            { 6,   5,  8, 0 }};
+        int[,] matrix3x5 = new int[,] {
+            { 1, 2, 3, 4, 5 },
+            { 6, 7, 8, 9, 10 },
+            { 11, 12, 13, 14, 10 } };
+        int[,] matrix4x5 = new int[,] {
+            { 1, 2, 3, 4, 5 },
+            { 6, 7, 8, 9, 10 },
+            { -11, 12, 13, 14, -15 },
+            { 6, 7, 8, 9, 0 }};
+        int[,] matrix5x5 = new int[,] {
+            { 1, 2, 3, 4, 5 },
+            { 6, 7, 8, 9, 10 },
+            { 11, 12, 13, 14, 15 },
+            { -1, -2, -3, -4, -5 },
+            { 6, 7, 8, 9, 0 }};
+        int[,] matrix6x5 = new int[,] {
+            { 1, 2, 3, 4, 5 },
+            { 6, 7, 8, 9, 10 },
+            { 11, 12, 13, 14, 15 },
+            { -1, -2, -3, -4, -5 },
+            { 0, 1, 0, 2, 0 },
+            { 6, 7, 8, 9, 0 }};
+        int[,] matrix4x6 = new int[,] {
+            { 1, 2, 3, 4, 5, -1 },
+            { 6, 7, 8, 9, 10, -2 },
+            { -1, -2, -3, -4, -5, -1 },
+            { 6, 7, 8, 9, 0, -2 }};
+        int[,] matrix5x6 = new int[,] {
+            { 1, 2, 3, 4, 5, -1 },
+            { 6, 7, 8, 9, 10, -2 },
+            { 11, 12, 13, 14, 15, -3 },
+            { -1, -2, -3, -4, -5, -1 },
+            { 6, 7, 8, 9, 0, -2 }};
+        int[,] matrix6x6 = new int[,] {
+            { 1,    2,  3,  4,  5,  -1 },
+            { 6,    7,  8,  9,  10, -2 },
+            { 11,   12, 13, 14, 15, -3 },
+            { -1,   -2, -3, -4, -5, -1 },
+            { 6,    7,  8,  9,  20, -2 },
+            { 1,    3,  3,  1,  5, 5 }};
+        double[,] matrix2x2 = new double[,] {
+            { 1, -2 },
+            { 5, -5 }};
+        double[,] matrix3x3 = new double[,] {
+            { 1, -2, 3 },
+            { 5, -5, 5 },
+            { 6, 7, 8 }};
+        int[] arr6 = new int[] { -3, 5, 5, 1, 0, 4 };
+        int[] arr6b = new int[] { 13, 10, 1, 0, -2, -4 };
+        int[] arr7 = new int[] { 1, 2, 13, 4, -5, 6, 7 };
+        int[] arr7b = new int[] { 1, 2, 3, 4, 5, 6, 7 };
+        int[] arr8 = new int[] { 1, 8, -3, 5, 5, 1, 0, 4 };
+        int[] arr9 = new int[] { 1, 12, 3, 4, 5, -6, 7, 0, 9 };
+        int[] arr10 = new int[] { 1, -8, -3, 5, -5, 1, 0, -4, -1, 2 };
+        int[] arr11 = new int[] { 1, 12, 13, 0, 9, 1, 5, -6, 7, 12, 14 };
+        double[] array7 = new double[] { 1, 2, 13, 4, -5, 6, 7 };
+        double[] array8 = new double[] { 1, 8, -3, 5, -5, 1, 0, 4 };
+        double[] array9 = new double[] { 1, 12, 3, 4, 5, -6, 7, 0, 9 };
 
-            for (int j = 0; j < len; j++)
+
+        int[,] A = new int[5, 5], B = new int[4, 5];
+
+        Array.Copy(matrix5x5, A, A.LongLength);
+        Array.Copy(matrix4x5, B, B.LongLength);
+        // Act
+        program.Draw(A);
+        program.Draw(B);
+        program.Task_2_13(ref A);
+        program.Task_2_13(ref B);
+
+        program.Draw(A);
+        program.Draw(B);
+
+    }
+    public void Draw(double[,] array)
+    {
+
+        for (int i = 0; i < array.GetLength(0); i++)
+        {
+            for (int j = 0; j < array.GetLength(1); j++)
             {
-                for (int k = 0; k < len; k++, count++)
-                {
-                    actual[count] = program.Task_1_2(new double[] { a[i], b[j], c[k] }, new double[] { c[i], a[j], b[k] });
-                    Console.Write($"{actual[count]}  ");
-                    if (actual[count] == 2 && i == 1)
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine($"{j}  {k}");
-                        Console.WriteLine();
-                    }
-                }
+
+                Console.Write($"{array[i, j]}  ");
             }
             Console.WriteLine();
         }
 
+        Console.WriteLine();
+    }
+    public void Draw(int[,] array)
+    {
+
+        for (int i = 0; i < array.GetLength(0); i++)
+        {
+            for (int j = 0; j < array.GetLength(1); j++)
+            {
+
+                Console.Write($"{array[i, j]}  ");
+            }
+            Console.WriteLine();
+        }
+
+        Console.WriteLine();
     }
     #region Level 1
     public long Task_1_1(int n, int k)
@@ -126,18 +211,14 @@ public class Program
         // code here
 
         // create and use GetDistance(v, a, t); t - hours
-        int i = 0;
-        while(true)
+        int i = 1;
+        while (GetDistance(v1, a1, i) > GetDistance(v2, a2, i))
         {
             i++;
-            if (GetDistance(v1, a1, i) == GetDistance(v2, a2, i))
-            {
-                answer = i;
-                break;
-            }
         }
+        Console.WriteLine(i);
         // end
-
+answer = i;
         return answer;
     }
 
@@ -165,18 +246,32 @@ public class Program
     {
         x = 0; y = 0;
         int n = matrix.GetLength(0), m = matrix.GetLength(1);
-        for(int i = 0; i<n; i++)
+        for (int i = 0; i < n; i++)
         {
-            for(int j = 0; j<m; j++)
+            for (int j = 0; j < m; j++)
             {
-                if(matrix[i, j] > matrix[x, y])
+                if (matrix[i, j] > matrix[x, y])
                 {
                     x = i; y = j;
                 }
             }
         }
     }
-
+    public void FindMin(int[,] matrix, out int x, out int y)
+    {
+        x = 0; y = 0;
+        int n = matrix.GetLength(0), m = matrix.GetLength(1);
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                if (matrix[i, j] < matrix[x, y])
+                {
+                    x = i; y = j;
+                }
+            }
+        }
+    }
 
     public void Task_2_2(double[] A, double[] B)
     {
@@ -190,17 +285,52 @@ public class Program
     public void Task_2_3(ref int[,] B, ref int[,] C)
     {
         // code here
-
+        int nb=B.GetLength(0), mb = B.GetLength(1), nc = C.GetLength(0), mc = C.GetLength(1);
+        int b = FindDiagonalMax(B), c = FindDiagonalMax(C);
+        int[,] newB = new int[nb - 1, mb], newC = new int[nc-1,mc];
         // create and use FindDiagonalMax(matrix);
-
+        for (int i = 0; i < nb - 1; i++)
+        {
+            if (i < b)
+            {
+                for (int j = 0; j < mb; j++)
+                {
+                    newB[i, j] = B[i, j];
+                }
+            }
+            else
+            for(int j = 0; j < mb; j++)
+            {
+                newB[i, j] = B[i + 1, j];
+            }
+        }
+        for (int i = 0; i < nc - 1; i++)
+        {
+            if (i < c)
+            {
+                for (int j = 0; j < mc; j++)
+                {
+                    newC[i, j] = C[i, j];
+                }
+            }
+            else
+                for (int j = 0; j < mc; j++)
+                {
+                    newC[i, j] = C[i + 1, j];
+                }
+        }
+        B = newB;
+        C = newC;
         // end
     }
-//  функции неизменны?  возможен ли подмен?
-    public int FindDiagonalMax(int[,] matrix){
-        int answer = 0, n = matrix.Length;
-        
-        for(int i=1; i< n; i++){
-            if(matrix [i,i]>matrix[answer,answer]) answer = i;
+    //  функции неизменны?  возможен ли подмен?
+    public int FindDiagonalMax(int[,] matrix)
+    {
+        int answer = 0, n = matrix.GetLength(0);
+
+        for (int i = 1; i < n; i++)
+        {
+            if (matrix[i, i] > matrix[answer, answer]) answer = i;
         }
 
         return answer;
@@ -219,10 +349,23 @@ public class Program
     public void Task_2_5(int[,] A, int[,] B)
     {
         // code here
-
+        int nb = B.GetLength(0), mb = B.GetLength(1), na = A.GetLength(0), ma = A.GetLength(1);
         // create and use FindColumnMax(matrix, columnIndex);
-
+        int aMax = FindColumnMax(A,0), bMax = FindColumnMax(B,0);
+        for(int j = 0; j < ma; j++)
+        {
+            int temp = A[aMax, j];
+            A[aMax,j] = B[bMax,j];
+            B[bMax,j] = temp;
+        }
         // end
+    }
+    public int FindColumnMax(int[,] matrix, int columnIndex)
+    {
+        int answer = 0, n = matrix.GetLength(0);
+
+        for (int i = 1; i < n; i++) if (matrix[i, columnIndex] > matrix[answer, columnIndex]) answer = i;
+        return answer;
     }
 
     public void Task_2_6(ref int[] A, int[] B)
@@ -237,13 +380,72 @@ public class Program
     public void Task_2_7(ref int[,] B, int[,] C)
     {
         // code here
-
+        int nb = B.GetLength(0), mb = B.GetLength(1), nc = C.GetLength(0), mc = C.GetLength(1);
         // create and use CountRowPositive(matrix, rowIndex);
         // create and use CountColumnPositive(matrix, colIndex);
-
+        int[,] b = new int[nb + 1, mb];
+        int bi = 0, bMax=0, cj = 0, cMax = 0;
+        for(int i = 0; i < nb; i++)
+        {
+            int k = CountRowPositive(B,i);
+            if (k > bMax)
+            {
+                bMax = k;
+                bi = i;
+            }
+        }
+        for (int j = 0; j < mc; j++)
+        {
+            int k = CountColumnPositive(C, j);
+            if (k > cMax)
+            {
+                cMax = k;
+                cj = j;
+            }
+        }
+        for(int i = 0; i <nb; i++)
+        {
+            if (i<=bi)
+            for(int j = 0;j < mb; j++)
+            {
+                    b[i, j] = B[i, j];
+            }
+            else
+            {
+                for (int j = 0; j < mb; j++)
+                {
+                    b[i+1, j] = B[i, j];
+                }
+            }
+        }
+        for (int j =0;j<mb; j++)
+        {
+            b[bi+1,j] = C[j,cj];
+        }
+        B = b;
         // end
     }
 
+    public int CountRowPositive(int[,]matrix, int rowIndex)
+    {
+        int c = 0, m = matrix.GetLength(1);
+       
+        for(int i = 0; i < m; i++)
+        {
+            if (matrix[rowIndex, i] > 0) c++;
+        }
+        return c;
+    }
+    public int CountColumnPositive(int[,]matrix, int colIndex)
+    {
+        int c = 0, n = matrix.GetLength(0);
+
+        for (int i = 0; i < n; i++)
+        {
+            if (matrix[i, colIndex] > 0) c++;
+        }
+        return c;
+    }
     public void Task_2_8(int[] A, int[] B)
     {
         // code here
@@ -258,13 +460,35 @@ public class Program
         int[] answer = default(int[]);
 
         // code here
+    int na = A.GetLength(0), ma = A.GetLength(1), nc = C.GetLength(0), mc = C.GetLength(1);
 
+        int[] a = new int[ma], c = new int[mc];
+        a = SumPositiveElementsInColumns(A);
+        c = SumPositiveElementsInColumns(C);
+        answer = new int[ma+mc];
+        for(int i = 0; i < ma; i++) { answer[i] = a[i]; }
+        for (int i = ma; i < ma+mc; i++) { answer[i] = c[i-ma]; }
         // create and use SumPositiveElementsInColumns(matrix);
-
+        for(int i = 0; i < ma + ma; i++) { Console.WriteLine(answer[i]); }
         // end
 
         return answer;
     }
+    public int[] SumPositiveElementsInColumns(int[,] matrix)
+    {
+        int m = matrix.GetLength(1),n = matrix.GetLength(0);
+        int[] answer = new int[m];
+        for(int j = 0; j < m; j++)
+        {
+            for(int i = 0; i < n; i++)
+            {
+                if (matrix[i, j] > 0) answer[j] += matrix[i, j];
+            }
+        }
+
+        return answer;
+    }
+
 
     public void Task_2_10(ref int[,] matrix)
     {
@@ -280,7 +504,12 @@ public class Program
         // code here
 
         // use FindMax(matrix); from Task_2_1
-
+        int ia, ja, ib, jb;
+        FindMax(A, out ia, out ja);
+        FindMax(B, out ib, out jb);
+        int temp = A[ia, ja];
+        A[ia,ja] = B[ib,jb];
+        B[ib,jb] = temp;
         // end
     }
     public void Task_2_12(int[,] A, int[,] B)
@@ -297,10 +526,42 @@ public class Program
         // code here
 
         // create and use RemoveRow(matrix, rowIndex);
-
+        FindMin(matrix, out int xMin, out int yMin);
+        FindMax(matrix, out int xMax, out int yMax);
+        if(xMin > xMax)
+        {
+            RemoveRow(ref matrix, xMin);
+            RemoveRow(ref matrix, xMax);
+        }
+        else if (xMin < xMax)
+        {
+            RemoveRow(ref matrix, xMax);
+            RemoveRow(ref matrix, xMin);
+        }
+        else RemoveRow(ref matrix, xMin);
         // end
     }
 
+    public void RemoveRow(ref int[,]matrix, int rowIndex)
+    {
+        int n = matrix.GetLength(0), m = matrix.GetLength(1);
+        int[,] newA = new int[n-1, m];
+        for(int i = 0;i < n - 1; i++)
+        {
+            for(int j = 0; j < m; j++)
+            {
+                if (i < rowIndex)
+                {
+                    newA[i,j]= matrix[i,j];
+                }
+                else
+                {
+                    newA[i,j]= matrix[i+1,j];
+                }
+            }
+        }
+        matrix = newA;
+    }
     public void Task_2_14(int[,] matrix)
     {
         // code here
@@ -317,12 +578,31 @@ public class Program
         // code here
 
         // create and use GetAverageWithoutMinMax(matrix);
-
+        double[] k = new double[3] {GetAverageWithoutMinMax(A), GetAverageWithoutMinMax(B), GetAverageWithoutMinMax(C)};
+        if (k[0] <= k[1] && k[1] <= k[2]) answer = 1;
+        else if (k[0] >= k[1] && k[1] >= k[2]) answer = -1;
+        else answer = 0;
         // end
 
         return answer;
     }
-
+    public double GetAverageWithoutMinMax(int[,] matrix)
+    {
+        int n = matrix.GetLength(0), m = matrix.GetLength(1);
+        double s = 0.0;
+        int max = matrix[0,0], min = matrix[0,0];
+        for (int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < m; j++)
+            {
+                s += matrix[i, j];
+                if (matrix[i, j] < min) min = matrix[i, j];
+                if (matrix[i, j] > max) max = matrix[i, j];
+            }
+        }
+        s = (s - min - max) / (n * m - 2);
+        return s;
+    }
     public void Task_2_16(int[] A, int[] B)
     {
         // code here
@@ -337,10 +617,44 @@ public class Program
         // code here
 
         // create and use SortRowsByMaxElement(matrix);
-
+        SortRowsByMaxElement(A);
+        SortRowsByMaxElement(B);
         // end
     }
 
+    public void SortRowsByMaxElement(int[,] matrix)  /////
+    {
+        int n = matrix.GetLength(0), m = matrix.GetLength (1);
+        int[] max = new int[n];
+        for(int i = 0; i < n; i++)
+        {
+            max[i] = matrix[i,0];
+            for (int j = 0; j < m; j++) if (matrix[i, j] > max[i]) max[i] = matrix[i, j];
+        }
+
+        for(int i = 1, k = 2; i < n;)
+        {
+            if(i == 0 || max[i] >= max[i - 1])
+            {
+                i = k;
+                k++;
+            }
+            else
+            {
+                int temp = max[i];
+                max[i] = max[i-1];
+                max[i-1]= temp;
+                for(int j = 0; j < m; j++)
+                {
+                    temp = matrix[i, j];
+                    matrix[i, j] = matrix[i - 1, j];
+                    matrix[i-1, j] = temp;
+                }
+                i--;
+            }
+        }
+        
+    }
     public void Task_2_18(int[,] A, int[,] B)
     {
         // code here
