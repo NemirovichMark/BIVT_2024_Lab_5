@@ -85,15 +85,16 @@ public class Program
         double[] array9 = new double[] { 1, 12, 3, 4, 5, -6, 7, 0, 9 };
 
 
-        int[,] A = new int[5, 5], B = new int[4, 5];
+        int[,] A = new int[4, 6], B = new int[6, 6];
 
-        Array.Copy(matrix5x5, A, A.LongLength);
-        Array.Copy(matrix4x5, B, B.LongLength);
+        Array.Copy(matrix4x6, A, A.LongLength);
+        Array.Copy(matrix6x6, B, B.LongLength);
+        // Act
+        
         // Act
         program.Draw(A);
         program.Draw(B);
-        program.Task_2_13(ref A);
-        program.Task_2_13(ref B);
+        program.Task_2_17(A, B);
 
         program.Draw(A);
         program.Draw(B);
@@ -634,7 +635,7 @@ answer = i;
 
         for(int i = 1, k = 2; i < n;)
         {
-            if(i == 0 || max[i] >= max[i - 1])
+            if(i == 0 || max[i] <= max[i - 1])
             {
                 i = k;
                 k++;
@@ -667,10 +668,23 @@ answer = i;
     public void Task_2_19(ref int[,] matrix)
     {
         // code here
-
+        int c = 0, n = matrix.GetLength(0), m = matrix.GetLength(1);
         // use RemoveRow(matrix, rowIndex); from 2_13
-
-        // end
+        for(int i = 0; i < n-c;)
+        {
+            bool flag = false;
+            for (int j = 0;j < m; j++)
+            {
+                if (matrix[i, j] == 0)
+                {
+                    flag = true;
+                    c++;
+                    break;
+                }
+            }
+            if (flag) RemoveRow(ref matrix, i);
+            else i++;
+        }
     }
     public void Task_2_20(ref int[,] A, ref int[,] B)
     {
@@ -711,8 +725,103 @@ answer = i;
         // code here
 
         // create and use MatrixValuesChange(matrix);
-
+        MatrixValuesChange(A);
+        MatrixValuesChange(B);
         // end
+    }
+    public void MatrixValuesChange(double[,] matrix)
+    {
+        int n = matrix.GetLength(0), m = matrix.GetLength(1);
+        if (matrix.Length <= 5)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                for(int j = 0; j < m; j++)
+                {
+                    if (matrix[i,j] > 0) matrix[i,j] *= 2;
+                    else matrix[i,j] /= 2;
+                }
+            }
+            return;
+        }
+        int[,] max = new int[5,2] { { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }};
+        for(int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                if (matrix[i, j] < matrix[max[0,0], max[0,1]]) continue;
+                else if (matrix[i, j] >= matrix[max[4, 0], max[4, 1]])
+                {
+                    max[0, 0] = max[1, 0];
+                    max[0, 1] = max[1, 1];
+
+                    max[1, 0] = max[2, 0];
+                    max[1, 1] = max[2, 1];
+
+                    max[2, 0] = max[3, 0];
+                    max[2, 1] = max[3, 1];
+
+                    max[3, 0] = max[4, 0];
+                    max[3, 1] = max[4, 1];
+
+                    max[4, 0] = i;
+                    max[4, 1] = j;
+                }
+                else if (matrix[i, j] >= matrix[max[3, 0], max[3, 1]])
+                {
+                    max[0, 0] = max[1, 0];
+                    max[0, 1] = max[1, 1];
+
+                    max[1, 0] = max[2, 0];
+                    max[1, 1] = max[2, 1];
+
+                    max[2, 0] = max[3, 0];
+                    max[2, 1] = max[3, 1];
+
+                    max[3, 0] = i;
+                    max[3, 1] = j;
+                }
+                else if (matrix[i, j] >= matrix[max[2, 0], max[2, 1]])
+                {
+                    max[0, 0] = max[1, 0];
+                    max[0, 1] = max[1, 1];
+
+                    max[1, 0] = max[2, 0];
+                    max[1, 1] = max[2, 1];
+
+                    max[2, 0] = i;
+                    max[2, 1] = j;
+                }
+                else if (matrix[i, j] >= matrix[max[1, 0], max[1, 1]])
+                {
+                    max[0, 0] = max[1, 0];
+                    max[0, 1] = max[1, 1];
+
+                    max[1, 0] = i;
+                    max[1, 1] = j;
+                }
+                else if (matrix[i, j] >= matrix[max[0, 0], max[0, 1]])
+                {
+                    max[0, 0] = i;
+                    max[0, 1] = j;
+                }
+            }
+        }
+
+        for(int i = 0; i< n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                if (matrix[i, j] > 0)
+                    matrix[i, j] /= 2;
+                else matrix[i, j] *= 2;
+            }
+        }
+        for(int i = 0; i < 5; i++)
+        {
+            if (matrix[max[i, 0], max[i, 1]] > 0) matrix[max[i, 0], max[i, 1]] *= 4;
+            else matrix[max[i, 0], max[i, 1]] /= 4;
+        }
     }
 
     public void Task_2_24(int[,] A, int[,] B)
