@@ -972,17 +972,47 @@ public class Program
     #endregion
 
     #region Level 3
-    public void Task_3_1(ref double[,] firstSumAndY, ref double[,] secondSumAndY)
+    public void Task_3_1(ref double[,] firstSumAndY, ref double[,] secondSumAndY)///////////        HELP
     {
         // code here
 
+    public delegate SumFunction(x, a, b, h);
+    public delegate YFunction(x, a, b, h);
         // create and use public delegate SumFunction(x, a, b, h) and public delegate YFunction(x, a, b, h)
         // create and use method GetSumAndY(sFunction, yFunction, a, b, h);
         // create and use 2 methods for both functions
-
+        GetSumAndY(sFunction, yFunction, a, b, h)
         // end
     }
 
+    public double sFunction(x,a,b,h){
+        double s = 0,i=1, znam = i, chisl = Math.cos(i*x), elem = chisl/znam;
+        while (elem>0.00001){
+            s+=elem;
+            i++;
+            znam*=i;
+            chisl = Math.cos(i*x);
+                
+            elem=chisl/znam;
+        }
+        return s+1;        
+    }
+    public double yFunction(x,a,b,h){
+        double answer = Math.Pow(Math.Exp,Math.Cos(x))*Math.cos(Math.sin(x));
+        return answer;        
+    }
+    public double[,] GetSumAndY(sFunction, yFunction, a, b, h){
+        SumFunction sDeleg = sFunction; 
+        YFunction yDeleg = yFunction;
+        double[,] answer = new double[(b-a)/h,2];
+        for(double x = a, int i = 0; x < b;x += h, i++){
+            answer[i,0]=sDeleg(x,a,b,h);
+            answer[i,1]=yDeleg(x,a,b,h);
+            
+        }
+        
+    }
+    
     public void Task_3_2(int[,] matrix)
     {
         // SortRowStyle sortStyle = default(SortRowStyle); - uncomment me
