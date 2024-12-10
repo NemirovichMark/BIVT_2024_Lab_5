@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Common;
@@ -69,6 +69,7 @@ public class Program {
         }
         // create and use Combinations(n, k);
 
+        // create and use Combinations(n, k);
         // create and use Factorial(n);
         answer = Combinations(n, k);
 
@@ -83,6 +84,7 @@ public class Program {
         return Math.Sqrt(p * (p - a) * (p - b) * (p - c));
     }
     public int Task_1_2(double[] first, double[] second) {
+
         int answer = 0;
 
         // code here
@@ -127,6 +129,7 @@ public class Program {
         // code here
 
         // create and use GetDistance(v, a, t); t - hours
+
         if (GetDistance(v1, a1, time) > GetDistance(v2, a2, time)) {
             return 1;
         }
@@ -137,6 +140,7 @@ public class Program {
         else {
             return 0;
         }
+
         // end
 
         // first = 1, second = 2, equal = 0
@@ -226,6 +230,7 @@ public class Program {
     }
     public void Task_2_4(int[,] A, int[,] B) {
         // code here
+
         int[] buf = new int[A.GetLength(0)];
         for (int i = 0; i < A.GetLength(0); i++) {
             buf[i] = A[FindDiagonalMaxIndex(A), i];
@@ -237,6 +242,7 @@ public class Program {
         for (int i = 0; i < B.GetLength(0); i++) {
             B[i, FindDiagonalMaxIndex(B)] = buf[i];
         }
+
         // end
     }
 
@@ -452,6 +458,7 @@ public class Program {
         // end
     }
 
+
     static int[,] SortRow(int[,] matrix, int Index) { 
         int n = matrix.GetLength(1);    
         for (int i = 0; i<n; i++) {
@@ -466,6 +473,7 @@ public class Program {
         return matrix;
     }
     public void Task_2_14(int[,] matrix) {
+
         // code here
 
         // create and use SortRow(matrix, rowIndex);
@@ -476,6 +484,7 @@ public class Program {
     }
 
     public int Task_2_15(int[,] A, int[,] B, int[,] C) {
+
         int answer = 0;
 
         // code here
@@ -487,6 +496,7 @@ public class Program {
         // 1 - increasing   0 - no sequence   -1 - decreasing
         return answer;
     }
+
     static int[] SortNegative(int [] array) {
         int n = array.Length;
         for (int i = 0; i < n; i++) {
@@ -659,6 +669,7 @@ public class Program {
             cols[j] = FindMaxNegativePerColumn(matrix, j);
         }
 
+
         // end
     }
 
@@ -700,6 +711,7 @@ public class Program {
 
         // use FindMaxIndex(matrix, out row, out column); like in 2_1
         // create and use SwapColumnDiagonal(matrix, columnIndex);
+
         int r;
         int col;
         FindMaxIndex(A, out r, out col);
@@ -748,6 +760,7 @@ public class Program {
 
         // create and use FindRowWithMaxNegativeCount(matrix); like in 2_25
         // in FindRowWithMaxNegativeCount use CountNegativeInRow(matrix, rowIndex); from 2_22
+
         int m = FindRowWithMaxNegativeCount(A);
         int n = FindRowWithMaxNegativeCount(B);
         for (int j = 0; j < A.GetLength(1); j++) {
@@ -755,6 +768,7 @@ public class Program {
             A[m, j] = B[n, j];
             B[n, j] = temp;
         }
+
         // end
     }
 
@@ -818,8 +832,10 @@ public class Program {
 
         // create and use FindSequence(array, A, B); // 1 - increasing, 0 - no sequence,  -1 - decreasing
         // A and B - start and end indexes of elements from array for search
+
         answerFirst  = FindSequence(first, 0, first.Length-1);
         answerSecond = FindSequence(second, 0, second.Length - 1);
+
 
         // end
     }
@@ -869,9 +885,11 @@ public class Program {
         // code here
 
         // use FindSequence(array, A, B); from Task_2_28a or entirely Task_2_28a
+
         // A and B - start and end indexes of elements from array for search        
         answerFirst = FindSequences(first, 0, first.Length - 1);
         answerSecond = FindSequences(second, 0, second.Length - 1);
+
 
         // end
     }
@@ -895,10 +913,12 @@ public class Program {
 
         // use FindSequence(array, A, B); from Task_2_28a or entirely Task_2_28a or Task_2_28b
         // A and B - start and end indexes of elements from array for search
+
         int[,] c = FindSequences(first, 0, first.Length - 1);
         answerFirst = FindMaxSequence(c);
         int[,] n = FindSequences(second, 0, second.Length - 1);
         answerSecond = FindMaxSequence(n);
+
         // end
     }
     #endregion
@@ -1024,7 +1044,8 @@ public class Program {
         // create and use public delegate GetTriangle(matrix);
         // create and use methods GetUpperTriange(array) and GetLowerTriange(array)
         // create and use GetSum(GetTriangle, matrix)
-        
+
+      
         // end
 
         return answer;

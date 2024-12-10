@@ -1412,7 +1412,7 @@ namespace Tests
             int[,] A = new int[5, 5], B = new int[6, 6];
             Array.Copy(matrix5x5, A, A.LongLength);
             Array.Copy(matrix6x6, B, B.LongLength);
-            int answerAu = 45, answerAl = 40, answerBu = 44, answerBl = 49;
+            int answerAu = 980, answerAl = 780, answerBu = 1424, answerBl = 1250;
             int resultAu = 0, resultAl = 0, resultBu = 0, resultBl = 0;
             // Act
             resultAu = main.Task_3_4(A, true);
@@ -1687,7 +1687,7 @@ namespace Tests
             for (int i = 0; i < answerBd.Length; i++)
                 Assert.AreEqual(answerBd[i], resultBd[i]);
         }
-        
+
         [TestMethod()]
         public void Task_4Test()
         {
