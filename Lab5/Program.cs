@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Data.Common;
 using System.Numerics;
 using System.Reflection;
@@ -86,19 +87,26 @@ public class Program
         double[] array9 = new double[] { 1, 12, 3, 4, 5, -6, 7, 0, 9 };
 
 
-        int[,] A = new int[5, 5], B = new int[6, 6];
+        //int[,] A = new int[5, 5], B = new int[6, 6];
 
-        Array.Copy(matrix5x5, A, A.LongLength);
-        Array.Copy(matrix6x6, B, B.LongLength);
+        //Array.Copy(matrix5x5, A, A.LongLength);
+        //Array.Copy(matrix6x6, B, B.LongLength);
+        //// Act
+        //double[,] resultA = null, resultB = null;
+
+        program.Task_3_5(out int resultA, out int resultB);
+        Console.WriteLine();
+        Console.WriteLine($"{resultA}  {resultB}");
         // Act
-
         // Act
-        program.Draw(A);
-        program.Draw(B);
-        program.Task_2_27(A, B);
-
-        program.Draw(A);
-        program.Draw(B);
+        //program.Draw(resultA);
+        //program.Draw(B);
+        //program.sFunction(Math.PI, Math.PI / 5, Math.PI, Math.PI / 25);
+        ////program.Task_3_1(ref resultA, ref resultB);
+        //program.Draw(resultA);
+        //program.Draw(resultB);
+        //Console.WriteLine($"{program.yFunction(Math.PI, )}");
+        //program.Draw(program.GetSumAndY(program.sFunction, program.yFunction, Math.PI / 5, Math.PI, Math.PI / 25));
 
     }
     public void Draw(double[,] array)
@@ -737,13 +745,13 @@ public class Program
         // end
     }
 
-    public int[] GetNegativeCountPerRow(int[,]matrix)
+    public int[] GetNegativeCountPerRow(int[,] matrix)
     {
         int n = matrix.GetLength(0), m = matrix.GetLength(1);
         int[] answer = new int[n];
-        for(int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
         {
-            for(int j = 0; j < m; j++)
+            for (int j = 0; j < m; j++)
             {
                 if (matrix[i, j] < 0) answer[i]++;
             }
@@ -767,20 +775,20 @@ public class Program
         {
             for (int i = 0; i < n; i++)
             {
-                for(int j = 0; j < m; j++)
+                for (int j = 0; j < m; j++)
                 {
-                    if (matrix[i,j] > 0) matrix[i,j] *= 2;
-                    else matrix[i,j] /= 2;
+                    if (matrix[i, j] > 0) matrix[i, j] *= 2;
+                    else matrix[i, j] /= 2;
                 }
             }
             return;
         }
-        int[,] max = new int[5,2] { { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }};
-        for(int i = 0; i < n; i++)
+        int[,] max = new int[5, 2] { { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } };
+        for (int i = 0; i < n; i++)
         {
             for (int j = 0; j < m; j++)
             {
-                if (matrix[i, j] < matrix[max[0,0], max[0,1]]) continue;
+                if (matrix[i, j] < matrix[max[0, 0], max[0, 1]]) continue;
                 else if (matrix[i, j] >= matrix[max[4, 0], max[4, 1]])
                 {
                     max[0, 0] = max[1, 0];
@@ -839,7 +847,7 @@ public class Program
             }
         }
 
-        for(int i = 0; i< n; i++)
+        for (int i = 0; i < n; i++)
         {
             for (int j = 0; j < m; j++)
             {
@@ -848,7 +856,7 @@ public class Program
                 else matrix[i, j] *= 2;
             }
         }
-        for(int i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++)
         {
             if (matrix[max[i, 0], max[i, 1]] > 0) matrix[max[i, 0], max[i, 1]] *= 4;
             else matrix[max[i, 0], max[i, 1]] /= 4;
@@ -885,7 +893,7 @@ public class Program
         int answer = 0;
         for (int i = 0; i < n; i++)
         {
-            if (matrix[i] > matrix[answer])answer=i;
+            if (matrix[i] > matrix[answer]) answer = i;
         }
         return answer;
     }
@@ -925,11 +933,11 @@ public class Program
     {
         int n = matrix.GetLength(0), m = matrix.GetLength(1);
         int[] answer = new int[n];
-        for(int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
         {
-            for(int j = 0; j < m; j++)
+            for (int j = 0; j < m; j++)
             {
-                if (matrix[i,j]> matrix[i,answer[i]]) answer[i] = j;
+                if (matrix[i, j] > matrix[i, answer[i]]) answer[i] = j;
             }
         }
         return answer;
@@ -937,7 +945,7 @@ public class Program
 
     public void ReplaceMaxElementOdd(int[,] matrix, int row, int column)
     {
-        matrix[row, column] *= (column+1);
+        matrix[row, column] *= (column + 1);
     }
     public void ReplaceMaxElementEven(int[,] matrix, int row, int column)
     {
@@ -976,218 +984,403 @@ public class Program
     {
         // code here
 
-    public delegate SumFunction(x, a, b, h);
-    public delegate YFunction(x, a, b, h);
+
         // create and use public delegate SumFunction(x, a, b, h) and public delegate YFunction(x, a, b, h)
         // create and use method GetSumAndY(sFunction, yFunction, a, b, h);
         // create and use 2 methods for both functions
-        GetSumAndY(sFunction, yFunction, a, b, h)
+        double a1 = 0.1, b1 = 1, h1 = 0.1;
+        double a2 = Math.PI / 5, b2 = Math.PI, h2 = Math.PI / 25;
+       firstSumAndY = GetSumAndY(sFunction, yFunction, a1, b1, h1);
+        secondSumAndY = GetSumAndY(sFunctionWithPI, yFunctionWithPI, a2, b2, h2);
         // end
     }
+    public delegate double operat(double x, double a, double b, double h);
 
-    public double sFunction(x,a,b,h){
-        double s = 0,i=1, znam = i, chisl = Math.cos(i*x), elem = chisl/znam;
-        while (elem>0.00001){
-            s+=elem;
+    public double sFunction(double x, double a, double b, double h)
+    {
+        double s = 0, i = 1, znam = i, chisl = Math.Cos(i * x), elem = chisl / znam;
+        while (Math.Abs(elem) > 0.0001)
+        {
+            s += elem;
             i++;
-            znam*=i;
-            chisl = Math.cos(i*x);
-                
-            elem=chisl/znam;
+            Console.WriteLine($"{i}    {s}");
+            znam *= i;
+            chisl = Math.Cos(i * x);
+
+            elem = chisl / znam;
         }
-        return s+1;        
+        return s + 1;
     }
-    public double yFunction(x,a,b,h){
-        double answer = Math.Pow(Math.Exp,Math.Cos(x))*Math.cos(Math.sin(x));
-        return answer;        
-    }
-    public double[,] GetSumAndY(sFunction, yFunction, a, b, h){
-        SumFunction sDeleg = sFunction; 
-        YFunction yDeleg = yFunction;
-        double[,] answer = new double[(b-a)/h,2];
-        for(double x = a, int i = 0; x < b;x += h, i++){
-            answer[i,0]=sDeleg(x,a,b,h);
-            answer[i,1]=yDeleg(x,a,b,h);
+    public double sFunctionWithPI(double x, double a, double b, double h)
+    {
+            double s = 0, i = 1, znam = i, chisl = Math.Cos(i * x), sign = (-1), elem = chisl / znam * sign;
             
+            while (Math.Abs(elem) > 0.0001)
+            {
+                s += elem;
+                i++;
+                znam = i * i;
+                chisl = Math.Cos(i * x);
+                sign *= (-1);
+                elem = chisl / znam * sign;
+            }
+            return s;
+    }
+    public double yFunction(double x, double a, double b, double h)
+    {
+        return Math.Exp(Math.Cos(x)) * Math.Cos(Math.Sin(x));
+    }
+    public double yFunctionWithPI(double x, double a, double b, double h)
+    {
+        return (x * x - (Math.PI * Math.PI / 3)) / 4;
+    }
+    public double[,] GetSumAndY(operat s, operat y, double a, double b, double h)
+    {
+        int n = (int)((b - a) / h + 1);
+        double[,] answer = new double[n, 2];
+        double x = a;
+        Console.WriteLine((int)((b - a) / h));
+        for (int i = 0; i<n; x += h, i++){
+            answer[i, 0] = s(x, a, b, h);
+            answer[i, 1] = y(x, a, b, h);
+            Console.WriteLine($"{i}   {x+h}   {b}");
         }
-        
-    }
-    
-    public void Task_3_2(int[,] matrix)
-    {
-        // SortRowStyle sortStyle = default(SortRowStyle); - uncomment me
-
-        // code here
-
-        // create and use public delegate SortRowStyle(matrix, rowIndex);
-        // create and use methods SortAscending(matrix, rowIndex) and SortDescending(matrix, rowIndex)
-        // change method in variable sortStyle in the loop here and use it for row sorting
-
-        // end
-    }
-
-    public double Task_3_3(double[] array)
-    {
-        double answer = 0;
-        // SwapDirection swapper = default(SwapDirection); - uncomment me
-
-        // code here
-
-        // create and use public delegate SwapDirection(array);
-        // create and use methods SwapRight(array) and SwapLeft(array) and GetSum(array)
-        // change method in variable swapper in the loop here and use it for array swapping
-
-        // end
 
         return answer;
+
+    }
+
+    public void Task_3_2(int[,] matrix)
+{
+    // SortRowStyle sortStyle = default(SortRowStyle); - uncomment me
+
+    // code here
+
+    // create and use public delegate SortRowStyle(matrix, rowIndex);
+    // create and use methods SortAscending(matrix, rowIndex) and SortDescending(matrix, rowIndex)
+    // change method in variable sortStyle in the loop here and use it for row sorting
+
+    // end
+}
+
+public double Task_3_3(double[] array)
+{
+    double answer = 0;
+        SwapDirection swapper = default(SwapDirection);// - uncomment me
+        int n = array.Length;
+        // code here
+        double mid = 0;
+        for(int i = 0; i<n; i++)
+        {
+            mid += array[i];
+        }
+        mid/=array.Length;
+
+        if (array[0] > mid) swapper = SwapLeft;
+        else swapper = SwapRight;
+        array = swapper(array);
+        answer = GetSum(array);
+
+    // create and use public delegate SwapDirection(array);
+    // create and use methods SwapRight(array) and SwapLeft(array) and GetSum(array)
+    // change method in variable swapper in the loop here and use it for array swapping
+
+    // end
+
+    return answer;
+}
+
+    public delegate double[] SwapDirection(double[] array);
+
+    public double[] SwapRight(double[] array)
+    {
+        int n = array.Length;
+        for (int i = n -1; i > 0; i-=2)
+        {
+                double temp = array[i];
+                array[i] = array[i - 1];
+                array[i - 1] = temp;
+        }
+        return array;
+    }
+
+    public double[] SwapLeft(double[] array)
+    {
+        int n = array.Length;
+        for (int i = 0; i < n-1; i += 2)
+        {
+                double temp = array[i];
+                array[i] = array[i + 1];
+                array[i + 1] = temp;
+            
+        }
+        return array;
+    }
+
+    public double GetSum(double[] array)
+    {
+        double sum = 0;
+        int n = array.Length;
+        for(int i = 1;i < n; i+=2)
+        {
+            sum += array[i];
+
+        }
+        return sum;
     }
 
     public int Task_3_4(int[,] matrix, bool isUpperTriangle)
-    {
-        int answer = 0;
+{
+    int answer = 0;
 
-        // code here
+    // code here
 
-        // create and use public delegate GetTriangle(matrix);
-        // create and use methods GetUpperTriange(array) and GetLowerTriange(array)
-        // and GetSum(GetTriangle, matrix)
-        // create and use method GetSum(array) similar to GetSum in Task_3_3
+    // create and use public delegate GetTriangle(matrix);
+    // create and use methods GetUpperTriange(array) and GetLowerTriange(array)
+    // and GetSum(GetTriangle, matrix)
+    // create and use method GetSum(array) similar to GetSum in Task_3_3
 
-        // end
+    // end
 
-        return answer;
-    }
+    return answer;
+}
 
-    public void Task_3_5(out int func1, out int func2)
-    {
-        func1 = 0;
-        func2 = 0;
+public void Task_3_5(out int func1, out int func2)
+{
+    func1 = 0;
+    func2 = 0;
 
         // code here
 
         // use public delegate YFunction(x, a, b, h) from Task_3_1
         // create and use method CountSignFlips(YFunction, a, b, h);
         // create and use 2 methods for both functions
-
+        func1 = CountSignFlips(Yf_3_5_1, 0, 2, 0.1);
+        Console.WriteLine();
+        Console.WriteLine();
+        func2 = CountSignFlips(Yf_3_5_2, -1, 1, 0.2);
         // end
     }
 
+public double Yf_3_5_1(double x, double a, double b, double h)
+    {
+        return x * x - Math.Sin(x);
+    }
+    public double Yf_3_5_2(double x, double a, double b, double h)
+    {
+        return Math.Exp(x) - 1;
+    }
+
+    public int CountSignFlips(operat Yf, double a, double b, double h)
+    {
+        int count = 0;
+        bool isNeg;
+        if (Yf(a, a, b, h) > 0) isNeg = false;
+        else isNeg = true;
+        int n = (int)((b - a) / h);
+        for(int i = 1;i<=n; i++)
+        {
+            double key = Yf(a+i*h, a, b, h);
+            if((key<0 && isNeg == false)||(key>0 && isNeg == true))
+            {
+                count++;
+                isNeg = !isNeg;
+            }
+            Console.WriteLine($"{isNeg} {count}   {key}");
+        }
+        return count;
+    }
     public void Task_3_6(int[,] matrix)
-    {
-        // code here
+{
+    // code here
 
-        // create and use public delegate FindElementDelegate(matrix);
-        // use method FindDiagonalMaxIndex(matrix) from Task_2_3;
-        // create and use method FindFirstRowMaxIndex(matrix);
-        // create and use method SwapColumns(matrix, FindDiagonalMaxIndex, FindFirstRowMaxIndex);
+    // create and use public delegate FindElementDelegate(matrix);
+    // use method FindDiagonalMaxIndex(matrix) from Task_2_3;
+    // create and use method FindFirstRowMaxIndex(matrix);
+    // create and use method SwapColumns(matrix, FindDiagonalMaxIndex, FindFirstRowMaxIndex);
 
-        // end
-    }
+    // end
+}
 
-    public void Task_3_7(ref int[,] B, int[,] C)
-    {
+public void Task_3_7(ref int[,] B, int[,] C)
+{
         // code here
 
         // create and use public delegate CountPositive(matrix, index);
         // use CountRowPositive(matrix, rowIndex) from Task_2_7
         // use CountColumnPositive(matrix, colIndex) from Task_2_7
-
+        int nb = B.GetLength(0), mb = B.GetLength(1), nc = C.GetLength(0), mc = C.GetLength(1);
+        // create and use CountRowPositive(matrix, rowIndex);
+        // create and use CountColumnPositive(matrix, colIndex);
+        CountPositive count= CountRowPositive;
+        int[,] b = new int[nb + 1, mb];
+        int bi = 0, bMax = 0, cj = 0, cMax = 0;
+        for (int i = 0; i < nb; i++)
+        {
+            int k = count(B, i);
+            if (k > bMax)
+            {
+                bMax = k;
+                bi = i;
+            }
+        }
+        count = CountColumnPositive;
+        for (int j = 0; j < mc; j++)
+        {
+            int k = count(C, j);
+            if (k > cMax)
+            {
+                cMax = k;
+                cj = j;
+            }
+        }
+        for (int i = 0; i < nb; i++)
+        {
+            if (i <= bi)
+                for (int j = 0; j < mb; j++)
+                {
+                    b[i, j] = B[i, j];
+                }
+            else
+            {
+                for (int j = 0; j < mb; j++)
+                {
+                    b[i + 1, j] = B[i, j];
+                }
+            }
+        }
+        for (int j = 0; j < mb; j++)
+        {
+            b[bi + 1, j] = C[j, cj];
+        }
+        B = b;
         // end
     }
-
+    public delegate int CountPositive(int[,] matrix, int index);
     public void Task_3_10(ref int[,] matrix)
-    {
-        // FindIndex searchArea = default(FindIndex); - uncomment me
+{
+    // FindIndex searchArea = default(FindIndex); - uncomment me
 
-        // code here
+    // code here
 
-        // create and use public delegate FindIndex(matrix);
-        // create and use method FindMaxBelowDiagonalIndex(matrix);
-        // create and use method FindMinAboveDiagonalIndex(matrix);
-        // use RemoveColumn(matrix, columnIndex) from Task_2_10
-        // create and use method RemoveColumns(matrix, findMaxBelowDiagonalIndex, findMinAboveDiagonalIndex)
+    // create and use public delegate FindIndex(matrix);
+    // create and use method FindMaxBelowDiagonalIndex(matrix);
+    // create and use method FindMinAboveDiagonalIndex(matrix);
+    // use RemoveColumn(matrix, columnIndex) from Task_2_10
+    // create and use method RemoveColumns(matrix, findMaxBelowDiagonalIndex, findMinAboveDiagonalIndex)
 
-        // end
-    }
+    // end
+}
 
-    public void Task_3_13(ref int[,] matrix)
-    {
+public void Task_3_13(ref int[,] matrix)
+{
         // code here
 
         // use public delegate FindElementDelegate(matrix) from Task_3_6
         // create and use method RemoveRows(matrix, findMax, findMin)
+        matrix = RemoveRows(matrix, FindMax, FindMin);
+    // end
+}
+    public delegate void FindElementDelegate(int[,] matrix, out int x, out int y);
+    public int[,] RemoveRows(int[,] matrix,  FindElementDelegate findMax, FindElementDelegate findMin)
+    {
+        findMax(matrix, out int iMax, out int jMax);
+        findMin(matrix, out int iMin, out int jMin);
+        if (iMin > iMax)
+        {
+            RemoveRow(ref matrix, iMin);
+            RemoveRow(ref matrix, iMax);
+        }
+        else if (iMin < iMax)
+        {
+            RemoveRow(ref matrix, iMax);
+            RemoveRow(ref matrix, iMin);
+        }
+        else RemoveRow(ref matrix, iMin);
 
-        // end
+        return matrix;
     }
-
     public void Task_3_22(int[,] matrix, out int[] rows, out int[] cols)
-    {
+{
 
-        rows = null;
-        cols = null;
+    rows = null;
+    cols = null;
 
-        // code here
+    // code here
 
-        // create and use public delegate GetNegativeArray(matrix);
-        // use GetNegativeCountPerRow(matrix) from Task_2_22
-        // use GetMaxNegativePerColumn(matrix) from Task_2_22
-        // create and use method FindNegatives(matrix, searcherRows, searcherCols, out rows, out cols);
+    // create and use public delegate GetNegativeArray(matrix);
+    // use GetNegativeCountPerRow(matrix) from Task_2_22
+    // use GetMaxNegativePerColumn(matrix) from Task_2_22
+    // create and use method FindNegatives(matrix, searcherRows, searcherCols, out rows, out cols);
 
-        // end
-    }
+    // end
+}
 
-    public void Task_3_27(int[,] A, int[,] B)
-    {
+public void Task_3_27(int[,] A, int[,] B)
+{
         // code here
 
         // create and use public delegate ReplaceMaxElement(matrix, rowIndex, max);
         // use ReplaceMaxElementOdd(matrix) from Task_2_27
         // use ReplaceMaxElementEven(matrix) from Task_2_27
         // create and use method EvenOddRowsTransform(matrix, replaceMaxElementOdd, replaceMaxElementEven);
-
+        
+        EvenOddRowsTransform(A, ReplaceMaxElementOdd, ReplaceMaxElementEven);
+        EvenOddRowsTransform(B, ReplaceMaxElementOdd, ReplaceMaxElementEven);
         // end
     }
+    public delegate void ReplaceMaxElement(int[,] matrix, int row, int column);
 
-    public void Task_3_28a(int[] first, int[] second, ref int answerFirst, ref int answerSecond)
+    public void EvenOddRowsTransform(int[,] matrix, ReplaceMaxElement replaceMaxElementOdd, ReplaceMaxElement replaceMaxElementEven)
     {
-        // code here
+        int[] maxIndexA = FindRowMaxIndex(matrix);
 
-        // create public delegate IsSequence(array, left, right);
-        // create and use method FindIncreasingSequence(array, A, B); similar to FindSequence(array, A, B) in Task_2_28a
-        // create and use method FindDecreasingSequence(array, A, B); similar to FindSequence(array, A, B) in Task_2_28a
-        // create and use method DefineSequence(array, findIncreasingSequence, findDecreasingSequence);
-
-        // end
+        for (int i = 0; i < maxIndexA.Length; i++)
+        {
+            if (i % 2 == 0) replaceMaxElementOdd(matrix, i, maxIndexA[i]);
+            else replaceMaxElementEven(matrix, i, maxIndexA[i]);
+        }
     }
+public void Task_3_28a(int[] first, int[] second, ref int answerFirst, ref int answerSecond)
+{
+    // code here
 
-    public void Task_3_28c(int[] first, int[] second, ref int[] answerFirstIncrease, ref int[] answerFirstDecrease, ref int[] answerSecondIncrease, ref int[] answerSecondDecrease)
-    {
-        // code here
+    // create public delegate IsSequence(array, left, right);
+    // create and use method FindIncreasingSequence(array, A, B); similar to FindSequence(array, A, B) in Task_2_28a
+    // create and use method FindDecreasingSequence(array, A, B); similar to FindSequence(array, A, B) in Task_2_28a
+    // create and use method DefineSequence(array, findIncreasingSequence, findDecreasingSequence);
 
-        // create public delegate IsSequence(array, left, right);
-        // use method FindIncreasingSequence(array, A, B); from Task_3_28a
-        // use method FindDecreasingSequence(array, A, B); from Task_3_28a
-        // create and use method FindLongestSequence(array, sequence);
+    // end
+}
 
-        // end
-    }
-    #endregion
-    #region bonus part
-    public double[,] Task_4(double[,] matrix, int index)
-    {
-        // MatrixConverter[] mc = new MatrixConverter[4]; - uncomment me
+public void Task_3_28c(int[] first, int[] second, ref int[] answerFirstIncrease, ref int[] answerFirstDecrease, ref int[] answerSecondIncrease, ref int[] answerSecondDecrease)
+{
+    // code here
 
-        // code here
+    // create public delegate IsSequence(array, left, right);
+    // use method FindIncreasingSequence(array, A, B); from Task_3_28a
+    // use method FindDecreasingSequence(array, A, B); from Task_3_28a
+    // create and use method FindLongestSequence(array, sequence);
 
-        // create public delegate MatrixConverter(matrix);
-        // create and use method ToUpperTriangular(matrix);
-        // create and use method ToLowerTriangular(matrix);
-        // create and use method ToLeftDiagonal(matrix); - start from the left top angle
-        // create and use method ToRightDiagonal(matrix); - start from the right bottom angle
+    // end
+}
+#endregion
+#region bonus part
+public double[,] Task_4(double[,] matrix, int index)
+{
+    // MatrixConverter[] mc = new MatrixConverter[4]; - uncomment me
 
-        // end
+    // code here
 
-        return matrix;
-    }
+    // create public delegate MatrixConverter(matrix);
+    // create and use method ToUpperTriangular(matrix);
+    // create and use method ToLowerTriangular(matrix);
+    // create and use method ToLeftDiagonal(matrix); - start from the left top angle
+    // create and use method ToRightDiagonal(matrix); - start from the right bottom angle
+
+    // end
+
+    return matrix;
+}
     #endregion
 }
