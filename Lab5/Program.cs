@@ -86,7 +86,11 @@ public class Program
         double[] array8 = new double[] { 1, 8, -3, 5, -5, 1, 0, 4 };
         double[] array9 = new double[] { 1, 12, 3, 4, 5, -6, 7, 0, 9 };
 
-
+        double[,] matrix2 = {
+            {5, 1, 2, 1},
+            {1, 6, 2, 3},
+            {2, 2, 7, 2},
+            {1, 3, 2, 8}};
         //int[,] A = new int[5, 5], B = new int[6, 6];
 
         //Array.Copy(matrix5x5, A, A.LongLength);
@@ -94,9 +98,9 @@ public class Program
         //// Act
         //double[,] resultA = null, resultB = null;
 
-        program.Task_3_5(out int resultA, out int resultB);
-        Console.WriteLine();
-        Console.WriteLine($"{resultA}  {resultB}");
+        //program.Task_3_5(out int resultA, out int resultB);
+        //Console.WriteLine();
+        //Console.WriteLine($"{resultA}  {resultB}");
         // Act
         // Act
         //program.Draw(resultA);
@@ -107,7 +111,9 @@ public class Program
         //program.Draw(resultB);
         //Console.WriteLine($"{program.yFunction(Math.PI, )}");
         //program.Draw(program.GetSumAndY(program.sFunction, program.yFunction, Math.PI / 5, Math.PI, Math.PI / 25));
-
+        program.Draw(matrix2);
+        program.Draw(program.ToLowerTriangular(matrix2));
+        //program.Draw(program.ToLeftDiagonal(matrix2));
     }
     public void Draw(double[,] array)
     {
@@ -1368,19 +1374,79 @@ public void Task_3_28c(int[] first, int[] second, ref int[] answerFirstIncrease,
 #region bonus part
 public double[,] Task_4(double[,] matrix, int index)
 {
-    // MatrixConverter[] mc = new MatrixConverter[4]; - uncomment me
+        MatrixConverter[] mc = new MatrixConverter[4];
+            mc[0]= ToUpperTriangular;
+        mc[1] = ToLowerTriangular;
+        mc[2] = ToLeftDiagonal;
+        mc[3] = ToRightDiagonal;// - uncomment me
 
-    // code here
+        // code here
+        switch (index)
+        {
+            case 0:
+                matrix = mc[0](matrix); break;
+            case 1:
+                matrix = mc[1](matrix); ; break;
+            case 2:
+                matrix = mc[2](matrix); ; break;
+            case 3:
+                matrix = mc[3](matrix); ; break;
+        }
+        // create public delegate MatrixConverter(matrix);
+        // create and use method ToUpperTriangular(matrix);
+        // create and use method ToLowerTriangular(matrix);
+        // create and use method ToLeftDiagonal(matrix); - start from the left top angle
+        // create and use method ToRightDiagonal(matrix); - start from the right bottom angle
 
-    // create public delegate MatrixConverter(matrix);
-    // create and use method ToUpperTriangular(matrix);
-    // create and use method ToLowerTriangular(matrix);
-    // create and use method ToLeftDiagonal(matrix); - start from the left top angle
-    // create and use method ToRightDiagonal(matrix); - start from the right bottom angle
+        // end
 
-    // end
-
-    return matrix;
+        return matrix;
 }
+    public delegate double[,] MatrixConverter(double[,] matrix);
+
+    public double[,] ToUpperTriangular(double[,] matrix)
+    {
+        int n = matrix.GetLength(0);
+        for(int j = 0; j <= n-2; j++)
+        {
+            for(int k = j+1; k<=n-1; k++)
+            {
+                double p = matrix[k, j] / matrix[j,j];
+                for(int m = j; m <= n - 1; m++)
+                {
+                    matrix[k, m] = matrix[k, m] - (matrix[j, m] * p);
+                }
+                    //Console.WriteLine($"{j}    {k}");
+            }
+        }
+        return matrix;
+    }
+
+    public double[,] ToLowerTriangular(double[,] matrix)
+    {
+        int n = matrix.GetLength(0);
+        
+        for (int j = n - 1; j >= 0; j--)
+        {
+            for (int k = j - 1; k >= 0; k--)
+            {
+                double p = matrix[k, j] / matrix[j, j];
+                for (int m = 0; m <= n - 1; m++)
+                {
+                    matrix[k, m] = matrix[k, m] - ( matrix[j, m] * p);
+                }
+            }
+        }
+        return matrix;
+    }
+
+    public double[,] ToLeftDiagonal(double[,] matrix)
+    {
+        return ToLowerTriangular(ToUpperTriangular(matrix));
+    }
+    public double[,] ToRightDiagonal(double[,] matrix)
+    {
+        return ToUpperTriangular(ToLowerTriangular(matrix));
+    }
     #endregion
 }
