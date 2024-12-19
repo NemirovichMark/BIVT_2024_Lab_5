@@ -1378,20 +1378,9 @@ public double[,] Task_4(double[,] matrix, int index)
             mc[0]= ToUpperTriangular;
         mc[1] = ToLowerTriangular;
         mc[2] = ToLeftDiagonal;
-        mc[3] = ToRightDiagonal;// - uncomment me
-
-        // code here
-        switch (index)
-        {
-            case 0:
-                matrix = mc[0](matrix); break;
-            case 1:
-                matrix = mc[1](matrix); ; break;
-            case 2:
-                matrix = mc[2](matrix); ; break;
-            case 3:
-                matrix = mc[3](matrix); ; break;
-        }
+        mc[3] = ToRightDiagonal;
+    
+    matrix = mc[index](matrix);
         // create public delegate MatrixConverter(matrix);
         // create and use method ToUpperTriangular(matrix);
         // create and use method ToLowerTriangular(matrix);
